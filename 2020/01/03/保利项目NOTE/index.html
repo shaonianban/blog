@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="少年版">
 <meta property="og:description" content="$emit&amp;#8195;之前我一直在用$emit，但是确没有真正的去官网vue.js 看看，$emit是解决了什么问题。&amp;#8195;它的应用场景为：当父组件使用了子组件，是通过prop来给子组件传值。那子组件要怎么主动与父组件建立联系呢？&amp;#8195;故事：现在有一位乡村爸爸，一大早起来，准备去省城办事，在桌子上留了字条：“儿子，今天我去省城一趟，勿担心，要记得提醒我买试卷”，高中的儿子起床看到">
 <meta property="article:published_time" content="2020-01-03T06:01:20.000Z">
-<meta property="article:modified_time" content="2020-01-03T08:03:07.275Z">
+<meta property="article:modified_time" content="2020-01-03T08:29:47.941Z">
 <meta property="article:author" content="郑嘉玉">
 <meta property="article:tag" content="项目实战">
 <meta name="twitter:card" content="summary">
@@ -337,6 +337,12 @@
 <p>如果要让事件抛出一个值：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button </span><br><span class="line"> v-on:click&#x3D;&quot;$emit(&#39;buy-test-paper&#39;,&#39;备注：老爸，给我带一套五年高考，三年模拟&#39;)&quot;&gt;</span><br><span class="line">&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
 <p>解释：所以$emit方法可以带值出来给父组件。父组件在使用子组件的过程中要监听子组件的buy-test-paper</p>
+<h2 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;example&quot;&gt;</span><br><span class="line">  &#123;&#123; message.split(&#39;&#39;).reverse().join(&#39;&#39;) &#125;&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>模板内的表达式初衷是为了解决简单运算的，但是部分开发者会往其中太多的逻辑，导致<strong>很难维护</strong>。<br>所以computed诞生的理由是：解放模板，对于复杂逻辑，写在computed中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;example&quot;&gt;</span><br><span class="line">  &lt;p&gt;Original message: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;!-- 翻转字符串方法 reverse() --&gt;</span><br><span class="line">  &lt;p&gt;Computed reversed message: &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;&lt;&#x2F;p&gt; </span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var vm &#x3D; new Vue(&#123;</span><br><span class="line">  el: &#39;#example&#39;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &#39;Hello&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  &lt;!-- 计算属性 --&gt;</span><br><span class="line">  computed: &#123;</span><br><span class="line">    reversedMessage: function () &#123;</span><br><span class="line">      &#x2F;&#x2F; &#96;this&#96; 指向 vm 实例</span><br><span class="line">      return this.message.split(&#39;&#39;).reverse().join(&#39;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>输出的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Original message: &quot;Hello&quot;</span><br><span class="line">Computed reversed message: &quot;olleH&quot;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -465,7 +471,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -498,7 +504,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#emit"><span class="nav-number">1.</span> <span class="nav-text">$emit</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#emit"><span class="nav-number">1.</span> <span class="nav-text">$emit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#computed"><span class="nav-number">2.</span> <span class="nav-text">computed</span></a></li></ol></div>
             
 
           </div>
