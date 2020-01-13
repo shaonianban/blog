@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="策略模式设计模式">
+<meta name="description" content="策略模式在生活中的存在由于我本身的语言是JS，所以先举一个在JS中使用到策略模式的例子。故事：年底的时候，公司商品都会开展大促销活动，在圣诞节一部分商品5折出售，一部分商品8折出售，一部分商品9折出售。按照之前的做法是:圣诞节：商品通过if去判断为打几折的范畴中，有多少种商品打折数就会有多少个if判断，代码不可复用 如果通过策略模式，我可以提前写好方案，如 12345678910111213141">
 <meta property="og:type" content="article">
 <meta property="og:title" content="通俗易懂理解JavaScript策略模式">
 <meta property="og:url" content="https://shaonianban.github.io/blog/2020/01/02/%E9%80%9A%E4%BF%97%E6%98%93%E6%87%82%E7%90%86%E8%A7%A3JavaScript%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="少年版">
-<meta property="og:description" content="策略模式设计模式">
+<meta property="og:description" content="策略模式在生活中的存在由于我本身的语言是JS，所以先举一个在JS中使用到策略模式的例子。故事：年底的时候，公司商品都会开展大促销活动，在圣诞节一部分商品5折出售，一部分商品8折出售，一部分商品9折出售。按照之前的做法是:圣诞节：商品通过if去判断为打几折的范畴中，有多少种商品打折数就会有多少个if判断，代码不可复用 如果通过策略模式，我可以提前写好方案，如 12345678910111213141">
 <meta property="article:published_time" content="2020-01-02T10:01:20.000Z">
-<meta property="article:modified_time" content="2020-01-08T01:59:27.914Z">
+<meta property="article:modified_time" content="2020-01-13T06:00:58.780Z">
 <meta property="article:author" content="郑嘉玉">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -351,7 +351,25 @@
       
 
       
-        <p>策略模式设计模式</p>
+        <h2 id="策略模式在生活中的存在"><a href="#策略模式在生活中的存在" class="headerlink" title="策略模式在生活中的存在"></a>策略模式在生活中的存在</h2><p>由于我本身的语言是JS，所以先举一个在JS中使用到策略模式的例子。<br>故事：年底的时候，公司商品都会开展大促销活动，在圣诞节一部分商品5折出售，一部分商品8折出售，一部分商品9折出售。<br>按照之前的做法是:<br>圣诞节：商品通过if去判断为打几折的范畴中，有多少种商品打折数就会有多少个if判断，代码不可复用</p>
+<p>如果通过策略模式，我可以提前写好方案，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var 圣诞节: &#123;</span><br><span class="line">    &quot;打五折&quot;：function(商品价格)&#123;</span><br><span class="line">        return 商品价格 * 0.5</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;打八折&quot;：function(商品价格)&#123;</span><br><span class="line">        return 商品价格 * 0.8</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;打九折&quot;：function(商品价格)&#123;</span><br><span class="line">        return 商品价格 * 0.9</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">价格计算方法：</span><br><span class="line">function 算钱 (商品价格，折扣)&#123;</span><br><span class="line">    return 圣诞节[折扣](商品价格)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="在Head-First设计模式这本书中收获的关于策略模式知识"><a href="#在Head-First设计模式这本书中收获的关于策略模式知识" class="headerlink" title="在Head+First设计模式这本书中收获的关于策略模式知识."></a>在Head+First设计模式这本书中收获的关于策略模式知识.</h2><p>这里面讲的是一个鸭子的故事，现在有一款游戏，里面有各种各样的鸭子，一开始开发，这个游戏很简单，里面的鸭子都会swin()和quack()，但是鸭的品种不一样，所以颜色不一样display()，所以在java的世界里，可以采用继承的方式，父类写好swin()和quack()的两个方法，子类继承父类且子类自已实现颜色display(),这是这款程序的开端。</p>
+<p>这时故事的插曲出现了：甲方爸爸，想改需求了，要明白，在程序的世界中，<strong>唯一不变的就是变化本身</strong>。<br>现在需求是：要给鸭子增加一个飞的能力，这有什么难的。我三下五除二就在父类里加入了fly()方法，很快就开发完成交货了，但是在演示那天，我意想不到的事发现了，有一个种类是<strong>塑料</strong>的鸭子，在甲方爸爸面前，满屏飞，简直尴尬。后续就是回公司被领导骂了一顿。</p>
+<p>后续修改的思考：那这时候fly()方法就不是所有子类都会有的方法，是部分子类，这时候我就想到了子类覆盖的方法，如果这时候塑料鸭子不会飞，我就在塑料鸭子的方法中重写fly(){},第二天，主管又来找我说要增加一种鸭子的种类，木头鸭，这种鸭子不会叫，所以木头鸭类只能重写quack(){}方法，需求一直都在变，如果我采用此方法更改，那未来将会是一场噩梦。</p>
+<p>这时策略模式拯救了我：<br>鸭子父类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Duck()&#123;</span><br><span class="line">    &lt;!-- 两个接口：飞和叫 --&gt;</span><br><span class="line">    FlyBehavior flyBehavior;</span><br><span class="line">    QuackBehavior quackBehavior;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 构造函数 --&gt;</span><br><span class="line">    public Duck() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 抽象且不用实现的外型方法 --&gt;</span><br><span class="line">    public abstract void display()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 委托给行为接口 --&gt;</span><br><span class="line">    public void performFly()&#123;</span><br><span class="line">        flyBehavior.fly()</span><br><span class="line">    &#125;</span><br><span class="line">    public void performQuack()&#123;</span><br><span class="line">        quackBehavior.quack()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 所有鸭子都拥有的游泳方法 --&gt;</span><br><span class="line">    public void swim()&#123;</span><br><span class="line">         System.out.printLn(&#39;All ducks swimming&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义两个接口: 飞和叫</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public interface FlyBehavior&#123;</span><br><span class="line">    public void fly()</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- 继承飞接口的飞方法 --&gt;</span><br><span class="line">public class FlyWithWings implements FlyBehavior&#123;</span><br><span class="line">    public void fly()&#123;</span><br><span class="line">        System.out.println(&#39;I&#39;m flying&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- 继承飞接口的不飞方法 --&gt;</span><br><span class="line">public class FlyNoWay implements FlyBehavior&#123;</span><br><span class="line">    public void fly()&#123;</span><br><span class="line">        System.out.println(&#39;I can&#39;t flying&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public interface QuackBehavior&#123;</span><br><span class="line">    public void quack()</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- 继承叫接口的叫方法 --&gt;</span><br><span class="line">public class Quack implements QuackBehavior&#123;</span><br><span class="line">    public void quack()&#123;</span><br><span class="line">        System.out.println(&#39;I&#39;m quack&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- 继承叫接口的不叫方法 --&gt;</span><br><span class="line">public class QuackNoWay implements QuackBehavior&#123;</span><br><span class="line">    public void quack()&#123;</span><br><span class="line">        System.out.println(&#39;I can&#39;t quack&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在定义一个绿头鸭子类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class GreenDuck extends Duck &#123;</span><br><span class="line">    &lt;!-- 构造函数 --&gt;</span><br><span class="line">    public GreenDuck()&#123;</span><br><span class="line">        &lt;!-- 这里的quackBehavior和flyBehavior继承父类Duck --&gt;</span><br><span class="line">        &lt;!-- 这时，鸭子会飞会叫 --&gt;</span><br><span class="line">        quackBehavior &#x3D; new Quack();</span><br><span class="line">        flyBehavior &#x3D; new FlyWithWings();</span><br><span class="line">    &#125;</span><br><span class="line">    &lt;!-- 实现子类的外型 --&gt;</span><br><span class="line">    public void display()&#123;</span><br><span class="line">        System.out.println(&#39;这是一只绿头鸭&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来是主函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MiniDuckGame()&#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        Duck greenDuck &#x3D; new greenDuck();</span><br><span class="line">        greenDuck.performQuack();</span><br><span class="line">        greenDuck.performFly();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>步骤：先new一只绿头鸭出来，然后执行绿头鸭的飞方法和叫方法，此时，如果想要扩展，如加一个吃饭eat(),只需增加一个吃的行为，即吃接口，继承吃接口实现吃的具体方法,（在java中）行为接口就相当于变成了各种策略，供子类来选择。</p>
+<p>这里面的做法有一个特色：<br><strong>不易变化的和容易变化的隔离开。</strong></p>
 
       
     </div>
@@ -442,8 +460,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -458,7 +485,7 @@
               
                 <a href="/blog/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -503,6 +530,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式在生活中的存在"><span class="nav-number">1.</span> <span class="nav-text">策略模式在生活中的存在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Head-First设计模式这本书中收获的关于策略模式知识"><span class="nav-number">2.</span> <span class="nav-text">在Head+First设计模式这本书中收获的关于策略模式知识.</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
