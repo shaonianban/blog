@@ -88,8 +88,10 @@
 <meta property="og:image" content="https://shaonianban.github.io/blog/2020/01/03/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/1.gif">
 <meta property="og:image" content="https://shaonianban.github.io/blog/2020/01/03/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/2.gif">
 <meta property="og:image" content="https://shaonianban.github.io/blog/2020/01/03/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/3.gif">
+<meta property="og:image" content="https://shaonianban.github.io/blog/2020/01/03/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/4.gif">
+<meta property="og:image" content="https://shaonianban.github.io/blog/2020/01/03/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/5.gif">
 <meta property="article:published_time" content="2020-01-03T05:01:20.000Z">
-<meta property="article:modified_time" content="2020-01-15T10:28:06.005Z">
+<meta property="article:modified_time" content="2020-01-16T06:43:27.740Z">
 <meta property="article:author" content="郑嘉玉">
 <meta property="article:tag" content="前端性能">
 <meta name="twitter:card" content="summary">
@@ -364,6 +366,22 @@
 <p>看一下运行结果：<br><img src="2.gif" alt="photo"><br>可以看到，我们加入了防抖以后，当你在频繁输入，不会频繁发送请求，只有当你在指定间隔内没有输入时，才会执行函数。如果停止输入但是在指定间隔内又输入，会重新触发计时。再看例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let biu &#x3D; function () &#123;</span><br><span class="line">    console.log(&#39;biu biu biu&#39;, new Date())</span><br><span class="line">&#125;</span><br><span class="line">let biu &#x3D; function () &#123;</span><br><span class="line">    console.log(&#39;biu biu biu&#39;, new Date())</span><br><span class="line">&#125;</span><br><span class="line">setInterval(debounce(biu,500),1000)</span><br><span class="line">setInterval(debounce(boom,2000),1000)</span><br></pre></td></tr></table></figure>
 <p>看一下运行结果：<br><img src="3.gif" alt="photo"><br>这个栗子就很好解释了，如果在时间间隔内执行函数，会重新触发计时，biu会在第一次1.5s执行后，每隔1s执行一次，而boom不会执行。因为它的时间间隔2s,而执行时间是1s，所以每次都会重新触发计时。</p>
+<h2 id="节流-Throttle"><a href="#节流-Throttle" class="headerlink" title="节流 Throttle"></a>节流 Throttle</h2><p>定义：规定在一个单位时间内，只能触发一次的函数。如果这个单位内触发多次函数，只有一次生效。<br>个人理解：<strong>函数节流就是fps游戏的射击速度，就算一直按着鼠标射击，也只会在规定射速内射出子弹。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function throttle(fun,delay)&#123;</span><br><span class="line">    let last,deferTimer;</span><br><span class="line">    return function(args)&#123;</span><br><span class="line">        let that &#x3D; this;</span><br><span class="line">        let _args &#x3D; args;</span><br><span class="line">        let now &#x3D; new Date();</span><br><span class="line">        if(last &amp;&amp; now &lt; last + delay)&#123;</span><br><span class="line">            clearTimeout(deferTimer);</span><br><span class="line">            deferTimer &#x3D; setTimeout(function()&#123;</span><br><span class="line">                last &#x3D; now;</span><br><span class="line">                fun.apply(that,_args)</span><br><span class="line">            &#125;,dalay)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            last &#x3D; now;</span><br><span class="line">            fun.apply(that,_args)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">let throttleAjax &#x3D; throttle(ajax,1000);</span><br><span class="line">let inputC &#x3D; document.getElementById(&#39;throttle&#39;);</span><br><span class="line">inputc.addEventListener(&#39;keyup&#39;,function(e)&#123;</span><br><span class="line">    throttleAjax(e.target.value);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：<br><img src="4.gif" alt="photo"><br>可以看到，我们在不断输入时，ajax会按照我们设定的时间，每1s执行一次。<br>结合刚刚的biubiu的栗子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let biubiu &#x3D; function()&#123;</span><br><span class="line">    console.log(&#39;biubiubiu&#39;,new Date())</span><br><span class="line">&#125;</span><br><span class="line">setInterval(throttle(biubiu,1000),10)</span><br></pre></td></tr></table></figure>
+<p><img src="5.gif" alt="photo"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>函数防抖和函数节流都是防止某一时间频繁触发，但是这两兄弟之间的原理却不一样。函数防抖是某一段时间内多次触发，会不断触发时间重计时，比如我现在时间的间隔是3秒，我在1.5s时再次触发，间隔会重新回到3s,而函数节流是间隔时间执行,比如我现在是1s的间隔，1s过去必会执行。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p><strong>防抖</strong></p>
+<ul>
+<li>search搜索联想，用户在不断输入值时，用防抖来节约资源</li>
+<li>window触发resize时，不断的调整浏览器窗口大小会不断的触发这个事件，用防抖来让其只触发一次</li>
+</ul>
+<p><strong>节流</strong></p>
+<ul>
+<li>鼠标不断点击触发，mousedown单位时间内只触发一次</li>
+<li>监听滚动事件，如微信的朋友圈下拉刷新，用throttle来让它在固定的间隔时间运行。</li>
+</ul>
 
       
     </div>
@@ -538,7 +556,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#防抖-Debounce"><span class="nav-number">1.</span> <span class="nav-text">防抖 Debounce</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#防抖-Debounce"><span class="nav-number">1.</span> <span class="nav-text">防抖 Debounce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节流-Throttle"><span class="nav-number">2.</span> <span class="nav-text">节流 Throttle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">4.</span> <span class="nav-text">应用场景</span></a></li></ol></div>
             
 
           </div>
